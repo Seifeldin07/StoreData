@@ -10,8 +10,10 @@ namespace StoreRepository.Interfaces
     public interface IGenericRepository <TEntity , TKey> where TEntity : BaseEntity <TKey>
     {
         Task <TEntity> GetByIdAsync (TKey id);
-
+        //Task<TEntity> GetByIdAsNOTrackingAsync(TKey id);
         Task<IReadOnlyList<TEntity>> GetAllAsync ();
+
+        Task<IReadOnlyList<TEntity>> GetAllAsNOTrackingAsync();
 
         Task AddAsync(TEntity entity);
 

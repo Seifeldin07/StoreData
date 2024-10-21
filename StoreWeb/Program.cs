@@ -1,7 +1,12 @@
 
 using Microsoft.EntityFrameworkCore;
 using StoreData.Contexts;
+using StoreData.Entities;
 using StoreRepository;
+using StoreRepository.Interfaces;
+using StoreRepository.Repositories;
+using StoreService.Services.ProductServices;
+using StoreService.Services.ProductServices.Dtos;
 using StoreWeb.Helper;
 
 namespace StoreWeb
@@ -21,6 +26,9 @@ namespace StoreWeb
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddScoped<IProductService, ProductServices>();
+            builder.Services.AddAutoMapper(typeof(ProductProfile));
             
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
