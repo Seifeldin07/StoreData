@@ -37,5 +37,6 @@ namespace StoreRepository.Repositories
     //    public void Update(TEntity entity)
     //        => _Context.Set<TEntity>().Update(entity);
 
+            throw new NotImplementedException();
     }
 }
