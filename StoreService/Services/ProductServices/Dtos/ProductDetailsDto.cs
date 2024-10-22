@@ -22,7 +22,7 @@ namespace StoreService.Services.ProductServices.Dtos
 
         public string TypeName { get; set; }
 
-        public DateTime CreatedAt { get; set; }
+        public DateTime createdAt { get; set; } = DateTime.Now;
 
 
 

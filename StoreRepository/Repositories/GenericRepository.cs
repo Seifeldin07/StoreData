@@ -24,7 +24,7 @@ namespace StoreRepository.Repositories
         
             => await _context.Set<TEntity>().AddAsync(entity);
 
-        public async void Delete(TEntity entity)
+        public async Task Delete(TEntity entity)
 
            => _context.Set<TEntity>().Remove(entity);
 
@@ -42,19 +42,9 @@ namespace StoreRepository.Repositories
           
             => await _context.Set<TEntity>().FindAsync(id);
         
-        public void Update(TEntity entity)
+        public async Task Update(TEntity entity)
         {
             _context.Set<TEntity>().Update(entity);
-        }
-
-        Task IGenericRepository<TEntity, TKey>.Delete(TEntity entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task IGenericRepository<TEntity, TKey>.Update(TEntity entity)
-        {
-            throw new NotImplementedException();
         }
 
     }
