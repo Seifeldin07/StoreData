@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using StoreData.Entities;
 using StoreRepository.Interfaces;
+using StoreRepository.specification.ProductSpecs;
+using StoreService.Helper;
 using StoreService.Services.ProductServices.Dtos;
 using System;
 using System.Collections.Generic;
@@ -39,11 +41,13 @@ namespace StoreService.Services.ProductServices
 
         }
 
-        public async Task<IReadOnlyList<ProductDetailsDto>> GetAllProductsAsync()
+        public async Task<PagenatiedResultDto<ProductDetailsDto>> GetAllProductsAsync(ProductSpecification input)
         {
-            var products = await _unitOfWork.Repository<Product, int>().GetAllAsNOTrackingAsync();
-
-            var mappedProduct =_mapper.Map <IReadOnlyList< ProductDetailsDto >>(products);
+            var specs = new ProductWithSpecifications(input);
+            var products = await _unitOfWork.Repository<Product, int>().GetAllWithSpecificationAsync(specs);
+            var countSpecs = new ProductWithCountSpecification(input);
+            var count = await _unitOfWork.Repository<Product, int>().GetCountSpecificationAsync(countSpecs);
+            var mappedProduct = _mapper.Map<IReadOnlyList<ProductDetailsDto>>(products);
 
             //var mappedProducts = products.Select(x => new ProductDetailsDto
             //{
@@ -57,9 +61,9 @@ namespace StoreService.Services.ProductServices
             //    TypeName = x.Type.Name,
             //}).ToList();
 
-            return mappedProduct;
+            return new PagenatiedResultDto<ProductDetailsDto>(input.PageIndex , input.PageSize,count,mappedProduct );
 
-
+ 
         }
 
 
@@ -82,8 +86,9 @@ namespace StoreService.Services.ProductServices
         {
             if (productId is null)
                 throw new Exception("Id is null");
+            var specs = new ProductWithSpecifications(productId);
 
-            var product = await _unitOfWork.Repository<Product, int>().GetByIdAsync(productId.Value);
+            var product = await _unitOfWork.Repository<Product, int>().GetWithSpecificationByIdAsync(specs);
 
             if (product is null)
                 throw new Exception("product Not Found ");

@@ -1,5 +1,6 @@
 
 using Microsoft.EntityFrameworkCore;
+using StackExchange.Redis;
 using StoreData.Contexts;
 using StoreData.Entities;
 using StoreRepository;
@@ -8,6 +9,8 @@ using StoreRepository.Repositories;
 using StoreService.Services.ProductServices;
 using StoreService.Services.ProductServices.Dtos;
 using StoreWeb.Helper;
+using StoreWeb.MiddleWares;
+using System;
 
 namespace StoreWeb
 {
@@ -26,10 +29,12 @@ namespace StoreWeb
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-            builder.Services.AddScoped<IProductService, ProductServices>();
-            builder.Services.AddAutoMapper(typeof(ProductProfile));
-            
+            builder.Services.AddSingleton<IConnectionMultiplexer>(config =>
+            {
+                var configuration = ConfigurationOptions.Parse(builder.Configuration.GetConnectionString("Redis"));
+                return ConnectionMultiplexer.Connect(configuration);
+            });
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -46,9 +51,12 @@ namespace StoreWeb
                 app.UseSwaggerUI();
             }
 
+            app.UseMiddleware<ExceptionMiddleWare>();
+
             app.UseHttpsRedirection();
 
             app.UseStaticFiles();
+
             app.UseAuthorization();
 
 
