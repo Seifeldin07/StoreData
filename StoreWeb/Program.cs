@@ -1,6 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using StackExchange.Redis;
+using Store.Web.Extentions;
 using StoreData.Contexts;
 using StoreData.Entities;
 using StoreRepository;
@@ -37,7 +38,7 @@ namespace StoreWeb
             });
 
             builder.Services.AddApplicationServices();
-            builder.Services.AddIdentityServices();
+            builder.Services.AddIdentityServices(builder.Configuration);
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();

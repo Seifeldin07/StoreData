@@ -8,6 +8,8 @@ using StoreService.Services.CashService;
 using StoreService.Services.BasketServices.Dtos;
 using StoreService.Services.BasketServices;
 using StoreRepository.Basket;
+using Store.Service.Services.TokenService;
+using Store.Service.Services.UserService;
 
 namespace StoreWeb.Extentions
 {
@@ -20,6 +22,8 @@ namespace StoreWeb.Extentions
             services.AddScoped<ICashService, CashService>();
             //services.AddScoped<IBasketService, BasketServiess>();
             services.AddScoped<IBasketRepository, BasketServiess>();
+            services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IUserService, UserService>();
             services.AddAutoMapper(typeof(ProductProfile));
             services.AddAutoMapper(typeof(BasketProfile));
             services.Configure<ApiBehaviorOptions>(options =>
