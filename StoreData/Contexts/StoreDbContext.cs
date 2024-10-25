@@ -11,6 +11,8 @@ namespace StoreData.Contexts
 {
     public class StoreDbContext : DbContext
     {
+        private DbSet<DeliveryMethods> deliveryMethods;
+
         public StoreDbContext(DbContextOptions<StoreDbContext> options) : base(options)
         {
             
@@ -27,6 +29,7 @@ namespace StoreData.Contexts
         public DbSet <ProductBrand> ProductBrands { get; set; }
         public DbSet <ProductType> ProductTypes { get; set; }
 
+        //public DbSet<DeliveryMethods> DeliveryMethods { get; set; }
 
 
 

@@ -29,6 +29,8 @@ namespace StoreService.Services.CashService
         {
             if (response == null)
                 return;
+          
+
             var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
             var serilaizedResponse = JsonSerializer.Serialize(response, options);
             await _database.StringSetAsync(key, serilaizedResponse, timeToLeave);

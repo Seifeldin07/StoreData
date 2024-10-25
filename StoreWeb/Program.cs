@@ -8,6 +8,7 @@ using StoreRepository.Interfaces;
 using StoreRepository.Repositories;
 using StoreService.Services.ProductServices;
 using StoreService.Services.ProductServices.Dtos;
+using StoreWeb.Extentions;
 using StoreWeb.Helper;
 using StoreWeb.MiddleWares;
 using System;
@@ -34,6 +35,9 @@ namespace StoreWeb
                 var configuration = ConfigurationOptions.Parse(builder.Configuration.GetConnectionString("Redis"));
                 return ConnectionMultiplexer.Connect(configuration);
             });
+
+            builder.Services.AddApplicationServices();
+            builder.Services.AddIdentityServices();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();

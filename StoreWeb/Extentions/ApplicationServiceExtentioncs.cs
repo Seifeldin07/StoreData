@@ -5,6 +5,9 @@ using StoreService.Services.ProductServices.Dtos;
 using StoreService.Services.ProductServices;
 using StoreService.HandleResponses;
 using StoreService.Services.CashService;
+using StoreService.Services.BasketServices.Dtos;
+using StoreService.Services.BasketServices;
+using StoreRepository.Basket;
 
 namespace StoreWeb.Extentions
 {
@@ -15,7 +18,10 @@ namespace StoreWeb.Extentions
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IProductService,ProductServices>();
             services.AddScoped<ICashService, CashService>();
+            //services.AddScoped<IBasketService, BasketServiess>();
+            services.AddScoped<IBasketRepository, BasketServiess>();
             services.AddAutoMapper(typeof(ProductProfile));
+            services.AddAutoMapper(typeof(BasketProfile));
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.InvalidModelStateResponseFactory = actionContext =>
