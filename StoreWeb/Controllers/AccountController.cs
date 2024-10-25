@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Store.Data.Entities.IdentityEntities;
 using Store.Service.Services.UserService;
 using Store.Service.Services.UserService.DTOs;
-using Store.Services.HandleResponses;
 using StoreService.HandleResponses;
 using StoreWeb.Controllers;
 using System.ComponentModel;
